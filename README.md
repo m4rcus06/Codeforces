@@ -1,1 +1,1 @@
-idk lol
+Things on my Codeforces account
