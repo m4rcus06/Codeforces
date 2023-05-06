@@ -36,18 +36,6 @@ int main() {
 	cin.tie(0)->sync_with_stdio(0);
 
 	int t = 1;
-
-	memset(isPrime, 1, sizeof isPrime);
-	isPrime[0] = isPrime[1] = 0;
-	for (int i = 2; i * i < N; ++i) {
-		if (isPrime[i]) {
-			for (int j = i * i; j < N; j += i) isPrime[j] = false;
-		}
-	}
-	for (int i = 2; i < N; ++i) {
-		if (isPrime[i]) primes.push_back(i);
-	}
-
 	cin >> t;
 	while (t--) {
 		solve();
