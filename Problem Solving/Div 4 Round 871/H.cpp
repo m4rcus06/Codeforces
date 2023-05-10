@@ -11,8 +11,32 @@ typedef long long ll;
 typedef pair<int, int> pii;
 typedef pair<ll, ll> pll;
 
-void solve() {
+const int MOD = 1e9 + 7;
 
+void add(int &a, int b) {
+	a += b;
+	if (a >= MOD) a -= MOD;
+}
+
+void solve() {
+	int n, k;
+	cin >> n >> k;
+	vector <int> dp(64, 0);
+
+	for (int i = 1; i <= n; ++i) {
+		int x; cin >> x;
+		for (int j = 0; j < 64; ++j) {
+			add(dp[j & x], dp[j]);
+		}
+		add(dp[x], 1);
+	}
+
+	int res = 0;
+	for (int i = 0; i < 64; ++i) {
+		if (__builtin_popcount(i) == k) add(res, dp[i]);
+	}
+
+	cout << res << '\n';
 }
 
 int main() {
