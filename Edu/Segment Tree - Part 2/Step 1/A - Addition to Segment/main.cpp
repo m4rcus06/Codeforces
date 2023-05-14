@@ -13,37 +13,55 @@ typedef pair<ll, ll> pll;
 
 struct SegmentTree {
 	int size;
-	vector <ll> Tree;
+	vector <int> Tree;
 
 	void init(int n) {
 		Tree.resize(4 * n, 0);
 	}
 
-	void add(int id, int lx, int rx, int u, int v, ll k) {
+	void assign(int &x, int y) { //assign y to x
+		if (y == -1) return;
+		x = y;
+	}
+
+	void propagate(int id, int lx, int rx) {
+		if (lx == rx) return;
+		assign(Tree[2 * id], Tree[id]);
+		assign(Tree[2 * id + 1], Tree[id]);
+		Tree[id] = -1;
+	}
+
+	void set(int id, int lx, int rx, int u, int v, ll k) {
 		if (lx > v || rx < u) return;
 		if (lx >= u && rx <= v) {
-			Tree[id] += k;
+			assign(Tree[id], k);
 			return;
 		}
 
+		propagate(id, lx, rx);
 		int mx = (lx + rx) >> 1;
-		add(2 * id, lx, mx, u, v, k);
-		add(2 * id + 1, mx + 1, rx, u, v, k);
+		set(2 * id, lx, mx, u, v, k);
+		set(2 * id + 1, mx + 1, rx, u, v, k);
 	}
 
-	void add(int l, int r, ll k) {
-		add(1, 1, size, l + 1, r, k);
+	void set(int l, int r, ll k) {
+		set(1, 1, size, l + 1, r, k);
 	}
 
 	ll query(int id, int lx, int rx, int i) {
-		if (lx > i || rx < i) return 0;
+		if (lx > i || rx < i) return -1;
 		if (lx == rx) return Tree[id];
 
 		int mx = (lx + rx) >> 1;
-		ll x = query(2 * id, lx, mx, i);
-		ll y = query(2 * id + 1, mx + 1, rx, i);
+		int x = query(2 * id, lx, mx, i);
+		int y = query(2 * id + 1, mx + 1, rx, i);
 
-		return (x + y + Tree[id]);
+		if (x == -1) {
+			assign(y, Tree[id]);
+			return y;
+		}
+		assign(x, Tree[id]);
+		return x;
 	}
 
 	ll query(int i) {
@@ -65,7 +83,7 @@ void solve() {
 		if (type == 1) {
 			int l, r, k;
 			cin >> l >> r >> k;
-			St.add(l, r, 1LL * k);
+			St.set(l, r, 1LL * k);
 		}
 		else {
 			int idx;
