@@ -1,3 +1,4 @@
+/* https://codeforces.com/edu/course/2/lesson/5/2/practice/contest/279653/problem/B */
 #include <bits/stdc++.h>
 using namespace std;
 
