@@ -18,7 +18,7 @@ ll n, k;
 int a[N], b[N];
 
 bool good(ll x) {
-	ll cnt = 0; //the amount of pair (i, j) <= x
+	ll cnt = 0; //the number of pair (i, j) <= x
 	for (int i = 1, j = n; i <= n; ++i) {
 		while (a[i] + b[j] > x && j > 0) --j;
 		cnt += j;
