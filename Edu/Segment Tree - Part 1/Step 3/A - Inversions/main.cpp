@@ -84,8 +84,8 @@ SegmentTree sTree;
 void solve() {
 	cin >> n;
 
-	sTree.size = 41;
-	sTree.init(41);
+	sTree.size = n;
+	sTree.init(n);
 
 	for (int i = 1; i <= n; ++i) {
 		int x; cin >> x;
